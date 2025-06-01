@@ -49,13 +49,18 @@ Salines Bassegoda (s.d.). <em>Suro de Mas Perxés</em>. Recuperat de <u>https://
 <div id="llista-observacions"></div>
 
 <script>
-    let index = 1;
-    const total = 5;
+       let index = 1;
+    const total = 5;  // Canvia-ho segons quantes imatges tinguis
     let intervalId = null;
     let carruselActiu = false;
 
     function imatge() {
         const nomMatricula = document.getElementById("matricula").textContent.trim();
+        const nomNormalitzat = nomMatricula.toLowerCase().replaceAll(' ', '');
+
+        //console.log("Matrícula original:", nomMatricula);
+        //console.log("Matrícula normalitzada:", nomNormalitzat);
+
         const carrusel = document.getElementById("carrusel");
         const img = document.getElementById("imatge-carrusel");
 
@@ -65,14 +70,15 @@ Salines Bassegoda (s.d.). <em>Suro de Mas Perxés</em>. Recuperat de <u>https://
             carrusel.style.display = "none";
             index = 1;
             carruselActiu = false;
+            console.log("Carrusel aturat.");
             return;
         }
 
         carrusel.style.display = "block";
-        //img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
-        img.src = `imatges/${nomMatricula.toLowerCase().replaceAll(' ', '')}/${index}.jpeg`;
-
+        img.src = `../imatges/${nomNormalitzat}/${index}.jpeg`;
         carruselActiu = true;
+
+        console.log("Iniciant carrusel a:", img.src);
 
         intervalId = setInterval(() => {
             index++;
@@ -82,9 +88,11 @@ Salines Bassegoda (s.d.). <em>Suro de Mas Perxés</em>. Recuperat de <u>https://
                 carrusel.style.display = "none";
                 index = 1;
                 carruselActiu = false;
+                console.log("Carrusel completat i tancat.");
                 return;
             }
-            img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
+            img.src = `imatges/${nomNormalitzat}/${index}.jpeg`;
+            console.log("Canviant a:", img.src);
         }, 3000);
     }
 
