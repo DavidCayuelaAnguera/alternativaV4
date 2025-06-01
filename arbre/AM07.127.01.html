@@ -10,7 +10,7 @@
 <header><h1>Plàtan d'en Gibert</h1></header>
 <main>
 <ul>
-<li><strong>Matrícula:</strong> AM07.127.01</li>
+<li><strong>Matrícula:</strong> <span id="matricula">AM07.127.01</span></li>
 <li><strong>Tàxon:</strong> Platanus × hispanica</li>
 <li><strong>Tipologia:</strong>Caducifoli </li>
 <li><strong>Terme municipal:</strong> Monistrol de Monserrat</li>
@@ -23,31 +23,79 @@
 "Donar la volta a l'arbre del Gibert" és una expressió que a Monistrol vol dir: anar de la plaça de la Font Gran fins a la plaça del Pont, bo i passant per sota de l'arbre, és clar! 
 El plataner de can Gibert o d'en Gibert és l'únic que resta d'una filera de plataners que voltava el camí que vorejava la Canaleta per la seva part superior, i que van desaparéixer en el moment de la construcció de la carretera a Montserrat.</td>
 <td></td><h2>Informació etnoecològica afegida pels usuaris</h2>
-<form onsubmit="afegirObservacio(event)">
-<textarea id="observacions" placeholder="Escriu aquí la teva informació..." rows="5"></textarea><br/>
-<button type="submit">Afegir informació</button>
-</form>
+
 <div id="llista-observacions"></div>
 <h2>Bibliografia</h2>
-<td>Boada, M. & Boada A., (2011). Plàtan d'en Gibert. Dins <em>Arbres remarcables de Catalunya. 100 ombres colossals</em>. (pp. 72-73) Figueres.: Brau.<Br>
-Diputació de Barcelona (2008). Plàtan d’en Gibert. Recuperat de <u>https://patrimonicultural.diba.cat/element/platan-den-gibert</u><Br>
+<td>Boada, M. &amp; Boada A., (2011). Plàtan d'en Gibert. Dins <em>Arbres remarcables de Catalunya. 100 ombres colossals</em>. (pp. 72-73) Figueres.: Brau.<br/>
+Diputació de Barcelona (2008). Plàtan d’en Gibert. Recuperat de <u>https://patrimonicultural.diba.cat/element/platan-den-gibert</u><br/>
 Generalitat de Catalunya (2021). <em>Plàtan d’en Gibert</em>. Recuperat de <u>https://mediambient.gencat.cat/ca/05_ambits_dactuacio/patrimoni_natural/arbres-monumentals/am_arbres_monumentals_fitxes/bages-5/platan-den-gibert/index.html</u></td>
 <td></td>
 <div class="center">
 <a href="../comarques/barcelona/el-bages.html">Torna a la comarca</a>
 <a href="../index.html">Torna a l'inici</a>
 </div>
-</main>
+
+<form onsubmit="afegirObservacio(event)">
+<textarea id="observacions" placeholder="Escriu aquí la teva observació..." rows="5"></textarea><br/>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<button type="submit">Afegir observació</button>
+<button onclick="imatge()" type="button">Imatges</button>
+</div>
+<div id="carrusel" style="display: none; width: 100%; height: 500px; overflow: hidden; margin-top: 10px; position: relative;">
+<img id="imatge-carrusel" src="" style="height: 100%; margin: 0 auto; display: block;"/>
+</div>
+</form>
+<div id="llista-observacions"></div>
+
 <script>
-        function afegirObservacio(e) {
-            e.preventDefault();
-            const text = document.getElementById("observacions").value;
-            if (text.trim() === "") return;
-            const div = document.createElement("div");
-            div.textContent = text;
-            document.getElementById("llista-observacions").appendChild(div);
-            document.getElementById("observacions").value = "";
+    let index = 1;
+    const total = 5;
+    let intervalId = null;
+    let carruselActiu = false;
+
+    function imatge() {
+        const nomMatricula = document.getElementById("matricula").textContent.trim();
+        const carrusel = document.getElementById("carrusel");
+        const img = document.getElementById("imatge-carrusel");
+
+        if (carruselActiu) {
+            clearInterval(intervalId);
+            intervalId = null;
+            carrusel.style.display = "none";
+            index = 1;
+            carruselActiu = false;
+            return;
         }
-    </script>
+
+        carrusel.style.display = "block";
+        img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
+        carruselActiu = true;
+
+        intervalId = setInterval(() => {
+            index++;
+            if (index > total) {
+                clearInterval(intervalId);
+                intervalId = null;
+                carrusel.style.display = "none";
+                index = 1;
+                carruselActiu = false;
+                return;
+            }
+            img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
+        }, 3000);
+    }
+
+    function afegirObservacio(e) {
+        e.preventDefault();
+        const text = document.getElementById("observacions").value;
+        if (text.trim() === "") return;
+        const div = document.createElement("div");
+        div.textContent = text;
+        document.getElementById("llista-observacions").appendChild(div);
+        document.getElementById("observacions").value = "";
+    }
+</script>
+</main>
+
 </body>
 </html>

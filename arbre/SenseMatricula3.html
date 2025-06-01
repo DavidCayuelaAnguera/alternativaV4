@@ -10,7 +10,7 @@
 <header><h1>Pi d'en Xandri</h1></header>
 <main>
 <ul>
-<li><strong>Matrícula:</strong> AM 40.205.01</li>
+<li><strong>Matrícula:</strong> <span id="matricula">AM 40.205.01</span></li>
 <li><strong>Tàxon:</strong> Pinus pinea</li>
 <li><strong>Tipologia:</strong> Perennifoli</li>
 <li><strong>Terme municipal:</strong> Sant Cugat del Vallès</li>
@@ -20,28 +20,76 @@
 </ul>
 <h2>Informació Etnoecològica</h2><td>En el segle XVIII, els camps de l'indret on es troba el Pi Gros d'en Xandri havien estat cultivats per vinyes, i quan van ser massa velles i poc productives, seguint els costums de les rotacions agràries de l'època, van ser arrencades, i al voltant de l'any 1774 es van replantar amb joves pins pinyoners com a regeneradors de la fertilitat del sòl. Passats uns 40 anys i ja en el segle XIX, es van talar els pins, es va aprofitar la seva fusta i s'hi va tornar a plantar vinya. Es van talar tots llevat d'un sol pi que en Josep Serrabogunyà va deixar ubicat a l'inici dels camps. Un pi solitari com una fita viva, sent respectat generació rere generació. Per les seves dimensions es va anomenar Pi Gros o Pi Gros d'en Xandri, simplificat avui com a Pi d'en Xandri. Rep el nom del 'paratge Xandri' de les terres en la Vall de Gausac, propietat del mas de Can Carreres, casa que es va convertir en Can Xandri en contraure matrimoni la pubilla del mas amb Nicolau Serrabogunyà, fill gran d'en Xandri, nom provinent del diminutiu d'Alexandre, Xandre i Xandri, sobrenom de la seva família. El Pi Gros d'en Xandri, actualment amb una longevitat de més de 250 anys i des del seu atac frustrat ara fa 25 anys amb la seva restauració i recuperació, forma part de la història santcugatenca, esdevenint un símbol d'identitat i estima de Sant Cugat del Vallès, de respecte de la natura i defensa de Torre Negra, i, per tant, també de valors, convivència i civisme per les generacions venidores.Ha esdevingut un símbol del poble per la peculiar forma de la seva capçada i pel fet d'estar en el camí de Sant Cugat a Sant Medir.</td>
 <td></td><h2>Informació etnoecològica afegida pels usuaris</h2>
-<form onsubmit="afegirObservacio(event)">
-<textarea id="observacions" placeholder="Escriu aquí la teva informació..." rows="5"></textarea><br/>
-<button type="submit">Afegir informació</button>
-</form>
+
 <div id="llista-observacions"></div>
-<h2>Bibliografia</h2><td>Diputació de barcelona (2025). <em>Pi d’en Xandri.</em> Recuperat de <u>https://patrimonicultural.diba.cat/element/pi-den-xandri<Br></u><u>
+<h2>Bibliografia</h2><td>Diputació de barcelona (2025). <em>Pi d’en Xandri.</em> Recuperat de <u>https://patrimonicultural.diba.cat/element/pi-den-xandri<br/></u><u>
 </u>Torrijos, J., (2022). <em>Els 250 anys del Pi Gros d'en Xandri: De declaració d'arbre d'interès local i comarcal a declaració d'arbre monumental de Catalunya</em>. Recuperat de <u>https://www.cugat.cat/diari/opinio_ambient/158373/els-250-anys-del-pi-gros-d_en-xandri_-de-declaracio-d_arbre-d_interes-local-i-comarcal-a-declaracio-d_arbre-monumental-de-catalunya</u></td>
 <td></td><div class="center">
 <a href="../comarques/barcelona/valles-occidental.html">Torna a la comarca</a>
 <a href="../index.html">Torna a l'inici</a>
 </div>
-</main>
+
+<form onsubmit="afegirObservacio(event)">
+<textarea id="observacions" placeholder="Escriu aquí la teva observació..." rows="5"></textarea><br/>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<button type="submit">Afegir observació</button>
+<button onclick="imatge()" type="button">Imatges</button>
+</div>
+<div id="carrusel" style="display: none; width: 100%; height: 500px; overflow: hidden; margin-top: 10px; position: relative;">
+<img id="imatge-carrusel" src="" style="height: 100%; margin: 0 auto; display: block;"/>
+</div>
+</form>
+<div id="llista-observacions"></div>
+
 <script>
-        function afegirObservacio(e) {
-            e.preventDefault();
-            const text = document.getElementById("observacions").value;
-            if (text.trim() === "") return;
-            const div = document.createElement("div");
-            div.textContent = text;
-            document.getElementById("llista-observacions").appendChild(div);
-            document.getElementById("observacions").value = "";
+    let index = 1;
+    const total = 5;
+    let intervalId = null;
+    let carruselActiu = false;
+
+    function imatge() {
+        const nomMatricula = document.getElementById("matricula").textContent.trim();
+        const carrusel = document.getElementById("carrusel");
+        const img = document.getElementById("imatge-carrusel");
+
+        if (carruselActiu) {
+            clearInterval(intervalId);
+            intervalId = null;
+            carrusel.style.display = "none";
+            index = 1;
+            carruselActiu = false;
+            return;
         }
-    </script>
+
+        carrusel.style.display = "block";
+        img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
+        carruselActiu = true;
+
+        intervalId = setInterval(() => {
+            index++;
+            if (index > total) {
+                clearInterval(intervalId);
+                intervalId = null;
+                carrusel.style.display = "none";
+                index = 1;
+                carruselActiu = false;
+                return;
+            }
+            img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
+        }, 3000);
+    }
+
+    function afegirObservacio(e) {
+        e.preventDefault();
+        const text = document.getElementById("observacions").value;
+        if (text.trim() === "") return;
+        const div = document.createElement("div");
+        div.textContent = text;
+        document.getElementById("llista-observacions").appendChild(div);
+        document.getElementById("observacions").value = "";
+    }
+</script>
+</main>
+
 </body>
 </html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html lang="ca">
+<head>
+<meta charset="utf-8"/>
+<title>Lledoner del mas Lledoner</title>
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<header><h1>Lledoner del mas Lledoner</h1></header>
+<main>
+<ul>
+<li><strong>Matrícula:</strong> AM11.068.01</li>
+<li><strong>Tàxon:</strong> Celtis australis</li>
+<li><strong>Tipologia:</strong>Caducifoli </li>
+<li><strong>Terme municipal:</strong> Cervelló</li>
+<li><strong>Comarca:</strong> El Baix Llobregat</li>
+<li><strong>Propietat:</strong> Privada  </li>
+<li><strong>Classificació Etnoecològica (segons Boada i Boada a Arbres remarcables de Catalunya. 100 ombres colossals (pp. 22-23))</strong> Funcional - simbòlic</li>
+</ul>
+<h2>Informació Etnoecològica</h2>
+<td>Un lledoner històric donà nom a la finca i a la capella de Sant Francesc del Lledoner (obra del 1558, en relació amb la llegenda que explica que Francesc d'Assís féu estada en aquest mas). L’actual Lledoner està situat al pati, la casa és de 1777. A començaments de segle, a la creu del tronc hi havia una plataforma de ciment amb una caseta.
+Des del punt de vista etnogràfic, el lledoner té una llarga història d'ús en la fabricació d'eines i utensilis agrícoles, gràcies a la duresa i flexibilitat de la seva fusta. A més, a moltes cultures mediterrànies, aquest arbre ha estat considerat un símbol de fortalesa i durabilitat.</td>
+<h2>Informació etnoecològica afegida pels usuaris</h2>
+<form onsubmit="afegirObservacio(event)">
+<textarea id="observacions" placeholder="Escriu aquí la teva informació..." rows="5"></textarea><br/>
+<button type="submit">Afegir informació</button>
+</form>
+<div id="llista-observacions"></div>
+<h2>Bibliografia</h2>
+<td>Diputació de Barcelona (2024). <em>Lledoner del Mas Nou del Lledoner</em>. Recuperat de <u>https://patrimonicultural.diba.cat/element/lledoner-del-mas-nou-del-lledoner<Br></u><u>
+</u>Generalitat de Catalunya (2021). <em>Lledoner del Mas Lledoner</em>. Recuperat de <u>https://mediambient.gencat.cat/ca/05_ambits_dactuacio/patrimoni_natural/arbres-monumentals/am_arbres_monumentals_fitxes/baix-llobregat-4/lledoner-del-mas-del-lledoner/index.html</u></td>
+<td></td>
+<div class="center">
+<a href="../comarques/barcelona/el-baix-llobregat.html">Torna a la comarca</a>
+<a href="../index.html">Torna a l'inici</a>
+</div>
+</main>
+<script>
+        function afegirObservacio(e) {
+            e.preventDefault();
+            const text = document.getElementById("observacions").value;
+            if (text.trim() === "") return;
+            const div = document.createElement("div");
+            div.textContent = text;
+            document.getElementById("llista-observacions").appendChild(div);
+            document.getElementById("observacions").value = "";
+        }
+    </script>
+</body>
+</html>

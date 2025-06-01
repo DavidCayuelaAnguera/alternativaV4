@@ -10,7 +10,7 @@
 <header><h1>Faig de la Pedra</h1></header>
 <main>
 <ul>
-<li><strong>Matrícula:</strong> AM02.086.02</li>
+<li><strong>Matrícula:</strong> <span id="matricula">AM02.086.02</span></li>
 <li><strong>Tàxon:</strong> Fagus sylvatica</li>
 <li><strong>Tipologia:</strong>Caducifoli </li>
 <li><strong>Terme municipal:</strong> La Jonquera</li>
@@ -22,10 +22,7 @@
 <p class="ample"><td>EL Faig de la Pedra és un exemplar de grans dimensions que suporta una pedra de granit d’uns 700 kg a la bifurcació d’una de les besses principals a uns 3 metres de terra.  La cultura popular autòctona ha donat una explicació llegendària d’homes forçuts i ferrenys: Contaven els avis que fa uns 100 o 200 anys, el masover del mas de Mirapols i el del mas de les Vinyasses estaven enfrontats, els dos masos es troben equidistants del Faig. En els màxims moments de crisi i empipament, per descarregar la seva còlera tenien el costum, forts com eren, de tirar-se pedres des de cada mas. La pedra del Faig seria doncs, fruit d’aquestes baralles, una roca que afortunadament no arribà al seu objectiu. (Llegenda explicada per Tomàs Masó a Lluís Serrano, 2011)</td>
 <td></td></p>
 <h2>Informació etnoecològica afegida pels usuaris</h2>
-<form onsubmit="afegirObservacio(event)">
-<textarea id="observacions" placeholder="Escriu aquí la teva informació..." rows="5"></textarea><br/>
-<button type="submit">Afegir informació</button>
-</form>
+
 <div id="llista-observacions"></div>
 <h2>Bibliografia</h2>
 <p class="ample"><td>Generalitat de Catalunya (s.d.). <em>Faig de la Pedra</em>. Recuperat de <u>https://mediambient.gencat.cat/ca/05_ambits_dactuacio/patrimoni_natural/arbres-monumentals/am_arbres_monumentals_fitxes/alt-emporda-12/faig-de-la-pedra/index.html</u></td>
@@ -34,17 +31,68 @@
 <a href="../comarques/girona/alt-emporda.html">Torna a la comarca</a>
 <a href="../index.html">Torna a l'inici</a>
 </div>
-</main>
+
+<form onsubmit="afegirObservacio(event)">
+<textarea id="observacions" placeholder="Escriu aquí la teva observació..." rows="5"></textarea><br/>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<button type="submit">Afegir observació</button>
+<button onclick="imatge()" type="button">Imatges</button>
+</div>
+<div id="carrusel" style="display: none; width: 100%; height: 500px; overflow: hidden; margin-top: 10px; position: relative;">
+<img id="imatge-carrusel" src="" style="height: 100%; margin: 0 auto; display: block;"/>
+</div>
+</form>
+<div id="llista-observacions"></div>
+
 <script>
-        function afegirObservacio(e) {
-            e.preventDefault();
-            const text = document.getElementById("observacions").value;
-            if (text.trim() === "") return;
-            const div = document.createElement("div");
-            div.textContent = text;
-            document.getElementById("llista-observacions").appendChild(div);
-            document.getElementById("observacions").value = "";
+    let index = 1;
+    const total = 5;
+    let intervalId = null;
+    let carruselActiu = false;
+
+    function imatge() {
+        const nomMatricula = document.getElementById("matricula").textContent.trim();
+        const carrusel = document.getElementById("carrusel");
+        const img = document.getElementById("imatge-carrusel");
+
+        if (carruselActiu) {
+            clearInterval(intervalId);
+            intervalId = null;
+            carrusel.style.display = "none";
+            index = 1;
+            carruselActiu = false;
+            return;
         }
-    </script>
+
+        carrusel.style.display = "block";
+        img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
+        carruselActiu = true;
+
+        intervalId = setInterval(() => {
+            index++;
+            if (index > total) {
+                clearInterval(intervalId);
+                intervalId = null;
+                carrusel.style.display = "none";
+                index = 1;
+                carruselActiu = false;
+                return;
+            }
+            img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
+        }, 3000);
+    }
+
+    function afegirObservacio(e) {
+        e.preventDefault();
+        const text = document.getElementById("observacions").value;
+        if (text.trim() === "") return;
+        const div = document.createElement("div");
+        div.textContent = text;
+        document.getElementById("llista-observacions").appendChild(div);
+        document.getElementById("observacions").value = "";
+    }
+</script>
+</main>
+
 </body>
 </html>

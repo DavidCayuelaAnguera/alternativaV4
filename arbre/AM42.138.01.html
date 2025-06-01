@@ -10,7 +10,7 @@
 <header><h1>Roure del Masot</h1></header>
 <main>
 <ul>
-<li><strong>Matrícula:</strong> AM42.138.01</li>
+<li><strong>Matrícula:</strong> <span id="matricula">AM42.138.01</span></li>
 <li><strong>Tàxon:</strong> Quercus pubescens  </li>
 <li><strong>Tipologia:</strong> Caducifoli</li>
 <li><strong>Terme municipal:</strong> Moià</li>
@@ -20,45 +20,93 @@
 </ul>
 <h2>Informació Etnoecològica</h2>
 <td>Fa de fita entre dos camps de conreu enmig de la plana i és un testimoni dels antics boscos que devien poblar aquest territori. Va ser declarar amb la grafia errònia: Roure del "Massot".
-Com a molts altres arbres, un poema dedicat als roures:<br>
-"...<br>
-Les estacions estan a tot arreu al mateix temps<br>
-Passió de l'estiu per l'hivern<br>
-I la tendresa dels altres dos<br>
-Els records com plomes<br>
-Els arbres trencant el cel<br>
-Un bell roure temperat de boira<br>
-La vida de les aus o la vida de les plomes<br>
-I tot un frívol plomall<br>
-Ple de somrients temors<br>
-I la soledat xerraire."<br>
-<strong>Paul Éluard (pseudònim d'Eugène Grindel) (1895-1952).<em> "A l'assalt dels jardins"</em>.</strong>><Br>
+Com a molts altres arbres, un poema dedicat als roures:<br/>
+"...<br/>
+Les estacions estan a tot arreu al mateix temps<br/>
+Passió de l'estiu per l'hivern<br/>
+I la tendresa dels altres dos<br/>
+Els records com plomes<br/>
+Els arbres trencant el cel<br/>
+Un bell roure temperat de boira<br/>
+La vida de les aus o la vida de les plomes<br/>
+I tot un frívol plomall<br/>
+Ple de somrients temors<br/>
+I la soledat xerraire."<br/>
+<strong>Paul Éluard (pseudònim d'Eugène Grindel) (1895-1952).<em> "A l'assalt dels jardins"</em>.</strong>&gt;<br/>
 Sembla que les primeres notícies del Masot són de l'any 1290, si bé el bloc original actual correspon al S.XVIII. Francesc Vilarrúbia Torrellebrota (1811-1888) nasqué en aquesta casa i ell feu construir l'arxiu, "Sancta Santorum" del mas on guarden documents i dades relatives a la família Vilarrúbia. Durant les guerres carlistes la masia es convertí en refugi de les forces tradicionalistes</td>
 <td></td><h2>Informació etnoecològica afegida pels usuaris</h2>
-<form onsubmit="afegirObservacio(event)">
-<textarea id="observacions" placeholder="Escriu aquí la teva informació..." rows="5"></textarea><br/>
-<button type="submit">Afegir informació</button>
-</form>
+
 <div id="llista-observacions"></div>
 <h2>Bibliografia</h2>
-<td>Generalitat de Catalunya (2021).<em> Roure del Masot</em>. Recuperat de <u>https://mediambient.gencat.cat/ca/05_ambits_dactuacio/patrimoni_natural/arbres-monumentals/am_arbres_monumentals_fitxes/moianes/roure-del-masot/index.html<Br></u><u>
+<td>Generalitat de Catalunya (2021).<em> Roure del Masot</em>. Recuperat de <u>https://mediambient.gencat.cat/ca/05_ambits_dactuacio/patrimoni_natural/arbres-monumentals/am_arbres_monumentals_fitxes/moianes/roure-del-masot/index.html<br/></u><u>
 </u>Plantipodes-AM (2023). <em>Roure del Masot</em>. Recuperat de <u>https://www.plantipodes-am.cat/fitxes/rouremassot.html</u></td>
 <td></td>
 <div class="center">
 <a href="../comarques/barcelona/el-moianes.html">Torna a la comarca</a>
 <a href="../index.html">Torna a l'inici</a>
 </div>
-</main>
+
+<form onsubmit="afegirObservacio(event)">
+<textarea id="observacions" placeholder="Escriu aquí la teva observació..." rows="5"></textarea><br/>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<button type="submit">Afegir observació</button>
+<button onclick="imatge()" type="button">Imatges</button>
+</div>
+<div id="carrusel" style="display: none; width: 100%; height: 500px; overflow: hidden; margin-top: 10px; position: relative;">
+<img id="imatge-carrusel" src="" style="height: 100%; margin: 0 auto; display: block;"/>
+</div>
+</form>
+<div id="llista-observacions"></div>
+
 <script>
-        function afegirObservacio(e) {
-            e.preventDefault();
-            const text = document.getElementById("observacions").value;
-            if (text.trim() === "") return;
-            const div = document.createElement("div");
-            div.textContent = text;
-            document.getElementById("llista-observacions").appendChild(div);
-            document.getElementById("observacions").value = "";
+    let index = 1;
+    const total = 5;
+    let intervalId = null;
+    let carruselActiu = false;
+
+    function imatge() {
+        const nomMatricula = document.getElementById("matricula").textContent.trim();
+        const carrusel = document.getElementById("carrusel");
+        const img = document.getElementById("imatge-carrusel");
+
+        if (carruselActiu) {
+            clearInterval(intervalId);
+            intervalId = null;
+            carrusel.style.display = "none";
+            index = 1;
+            carruselActiu = false;
+            return;
         }
-    </script>
+
+        carrusel.style.display = "block";
+        img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
+        carruselActiu = true;
+
+        intervalId = setInterval(() => {
+            index++;
+            if (index > total) {
+                clearInterval(intervalId);
+                intervalId = null;
+                carrusel.style.display = "none";
+                index = 1;
+                carruselActiu = false;
+                return;
+            }
+            img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
+        }, 3000);
+    }
+
+    function afegirObservacio(e) {
+        e.preventDefault();
+        const text = document.getElementById("observacions").value;
+        if (text.trim() === "") return;
+        const div = document.createElement("div");
+        div.textContent = text;
+        document.getElementById("llista-observacions").appendChild(div);
+        document.getElementById("observacions").value = "";
+    }
+</script>
+</main>
+
 </body>
 </html>
