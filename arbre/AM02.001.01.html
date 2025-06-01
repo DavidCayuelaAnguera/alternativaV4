@@ -69,7 +69,9 @@ Salines Bassegoda (s.d.). <em>Suro de Mas Perxés</em>. Recuperat de <u>https://
         }
 
         carrusel.style.display = "block";
-        img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
+        //img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
+        img.src = `imatges/${nomMatricula.toLowerCase().replaceAll(' ', '')}/${index}.jpeg`;
+
         carruselActiu = true;
 
         intervalId = setInterval(() => {
