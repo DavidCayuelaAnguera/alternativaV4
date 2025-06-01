@@ -56,7 +56,9 @@ Salines Bassegoda (s.d.). <em>Suro de Mas Perxés</em>. Recuperat de <u>https://
 
     function imatge() {
         const nomMatricula = document.getElementById("matricula").textContent.trim();
-        const nomNormalitzat = nomMatricula.toLowerCase().replaceAll(' ', '');
+        //const nomNormalitzat = nomMatricula.toLowerCase().replaceAll(' ', '');
+        const nomNormalitzat = nomMatricula.replaceAll(' ', '');
+
 
         //console.log("Matrícula original:", nomMatricula);
         //console.log("Matrícula normalitzada:", nomNormalitzat);
