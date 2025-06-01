@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html lang="ca">
+<head>
+<meta charset="utf-8"/>
+<title>Roure de la Xoriguera</title>
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<header><h1>Roure de la Xoriguera</h1></header>
+<main>
+<ul>
+<li><strong>Matrícula:</strong> <span id="matricula">AM19.133.01</span></li>
+<li><strong>Tàxon:</strong> Quercus pubescens  </li>
+<li><strong>Tipologia:</strong> Caducifoli </li>
+<li><strong>Terme municipal:</strong> les Planes d'Hostoles</li>
+<li><strong>Comarca:</strong> La Garrotxa</li>
+<li><strong>Propietat:</strong> Privada</li>
+<li><strong>Classificació Etnoecològica (segons Boada i Boada a Arbres remarcables de Catalunya. 100 ombres colossals (pp. 22-23))</strong> Polítics</li>
+</ul>
+<h2>Informació Etnoecològica</h2>
+<td>A la finca de la Xoriguera existia una roureda d'exemplars magnífics. Quan l'any 1908, el propietari va decidir tallar la roureda, la seva família li ho retragué, aleshores, el propietari va decidir no deixar tallar 12 dels roures, però li calgué pagar 15 duros per cada un d'ells. Aquest Roure és un d'aquests 12 escollits.
+Pels volts dels anys trenta, en plena Guerra Civil, el senyor Pere, el propietari del Bosc de la Xuriguera es va vendre tots els arbres per tallar-los, ja que en aquella època la fusta tenia un altre preu i els boscos eren molt més rendibles que no pas ara. El cas és que el senyor Pere va tenir remordiments un cop feta la venda, ja que hi havia arbres tan enormes que era difícil veure’n altres d’iguals per allà a prop. El que va fer va ser comprar 10 arbres, a quinze duros cadascun molt més cars del preu que els havia venut, però gràcies a aquesta acció avui dia podem gaudir d’aquest magnífic exemplar i de dos més: el roure de la Partió situat just al límit entre la Garrotxa i la Selva, i el roure de Font d'Àliga situat a prop de la font del mateix nom. Què va passar amb els altres nou arbres? De moment no se sap si són vius o morts, però és un assumpte pendent d’investigar i formarà part d’una altre història.
+La inscripció de Maria de Cabanyes gravada a una pedra l'honora el nostre Roure:
+"Ets un arbre ferm i altiu,
+que es va salvar d'una forta talada,
+amb el pas dels anys molt més joliu,
+desafiant el sol, el vent i la gebrada".
+</td>
+<h2>Informació etnoecològica afegida pels usuaris</h2>
+
+<div id="llista-observacions"></div>
+<h2>Bibliografia</h2>
+<td>Duran, G., Ros, A. &amp; Oliver, X. (eds.), (2018). Roure de la Xuriguera. Dintre de <em>Arbres amb història de la Garrotxa. Guia dels arbres singulars de la comarca</em>. (p, 130) Catalunya: Parc Natural de la Zona Volcànica de la Garrotxa.
+<br/>Generalitat de Catalunya (2021). <em>Roure de la Xoriguera</em>. Recuperat de <u>https://mediambient.gencat.cat/ca/05_ambits_dactuacio/patrimoni_natural/arbres-monumentals/am_arbres_monumentals_fitxes/garrotxa-7/roure-de-la-xoriguera/index.html</u><br/>
+Orús, E., (2007). 1<em>20 Grans Arbres del Pirineu Català i d'Andorra</em>. Sant Vicenç de Castellet: Farell.
+<br/>Plantipodes-AM (2023). <em>Roure de la Xoriguera</em>. Recuperat de <u>https://www.plantipodes-am.cat/fitxes/rourexoriguera.html</u></td>
+<td></td>
+<div class="center">
+<a href="../comarques/girona/la-garrotxa.html">Torna a la comarca</a>
+<a href="../index.html">Torna a l'inici</a>
+</div>
+
+<form onsubmit="afegirObservacio(event)">
+<textarea id="observacions" placeholder="Escriu aquí la teva observació..." rows="5"></textarea><br/>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<button type="submit">Afegir observació</button>
+<button onclick="imatge()" type="button">Imatges</button>
+</div>
+<div id="carrusel" style="display: none; width: 100%; height: 500px; overflow: hidden; margin-top: 10px; position: relative;">
+<img id="imatge-carrusel" src="" style="height: 100%; margin: 0 auto; display: block;"/>
+</div>
+</form>
+<div id="llista-observacions"></div>
+
+<script>
+    let index = 1;
+    const total = 5;
+    let intervalId = null;
+    let carruselActiu = false;
+
+    function imatge() {
+        const nomMatricula = document.getElementById("matricula").textContent.trim();
+        const carrusel = document.getElementById("carrusel");
+        const img = document.getElementById("imatge-carrusel");
+
+        if (carruselActiu) {
+            clearInterval(intervalId);
+            intervalId = null;
+            carrusel.style.display = "none";
+            index = 1;
+            carruselActiu = false;
+            return;
+        }
+
+        carrusel.style.display = "block";
+        img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
+        carruselActiu = true;
+
+        intervalId = setInterval(() => {
+            index++;
+            if (index > total) {
+                clearInterval(intervalId);
+                intervalId = null;
+                carrusel.style.display = "none";
+                index = 1;
+                carruselActiu = false;
+                return;
+            }
+            img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
+        }, 3000);
+    }
+
+    function afegirObservacio(e) {
+        e.preventDefault();
+        const text = document.getElementById("observacions").value;
+        if (text.trim() === "") return;
+        const div = document.createElement("div");
+        div.textContent = text;
+        document.getElementById("llista-observacions").appendChild(div);
+        document.getElementById("observacions").value = "";
+    }
+</script>
+</main>
+
+</body>
+</html>

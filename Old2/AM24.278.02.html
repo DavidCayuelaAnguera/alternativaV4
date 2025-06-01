@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html lang="ca">
+<head>
+<meta charset="utf-8"/>
+<title>Plàtan de la Font Gran</title>
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<header><h1>Plàtan de la Font Gran</h1></header>
+<main>
+<ul>
+<li><strong>Matrícula:</strong> <span id="matricula">AM24.278.02</span></li>
+<li><strong>Tàxon:</strong> Platanus × hispanica</li>
+<li><strong>Tipologia:</strong> Caducifoli</li>
+<li><strong>Terme municipal:</strong> Taradell</li>
+<li><strong>Comarca:</strong> Osona</li>
+<li><strong>Propietat:</strong> Pública  </li>
+<li><strong>Classificació Etnoecològica (segons Boada i Boada a Arbres remarcables de Catalunya. 100 ombres colossals (pp. 22-23))</strong> Funcional - simbòlic, atractors turístics</li>
+</ul>
+<h2>Informació Etnoecològica</h2><td>El parc de la Font Gran situat a la part baixa de la població i a la riba de la riera de Taradell, és un dels llocs més bonics que cal veure del poble.
+Dóna nom al parc, la font que fou construïda el 1790, després de canalitzar el gran doll d'aigua que antigament brollava pels esqueis de les roques situades en aquest indret i que fou probablement  l'origen i formació de la població, ja que abastia el poble, donava aigua als paraires i feia funcionar els molins.
+La font, abans anomenada Font de Sant Genís, mostra set brocs de metall i un cap de lleó de pedra al centre.
+Es gaudeix de calma, i fresca a l'estiu, en el recorregut pel parc, que dóna la volta i té com a referència el corpulent, alt i centenari plàtan.</td>
+<td></td>
+<h2>Informació etnoecològica afegida pels usuaris</h2>
+
+<div id="llista-observacions"></div>
+<h2>Bibliografia</h2><td>Generalitat de Catalunya (2022). <em>Plàtan de la Font Gran</em>. Recuperat de <u>https://mediambient.gencat.cat/ca/05_ambits_dactuacio/patrimoni_natural/arbres-monumentals/am_arbres_monumentals_fitxes/osona-30/platan-de-la-font-gran/index.html</u></td>
+<td></td><div class="center">
+<a href="../comarques/barcelona/osona.html">Torna a la comarca</a>
+<a href="../index.html">Torna a l'inici</a>
+</div>
+
+<form onsubmit="afegirObservacio(event)">
+<textarea id="observacions" placeholder="Escriu aquí la teva observació..." rows="5"></textarea><br/>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<button type="submit">Afegir observació</button>
+<button onclick="imatge()" type="button">Imatges</button>
+</div>
+<div id="carrusel" style="display: none; width: 100%; height: 500px; overflow: hidden; margin-top: 10px; position: relative;">
+<img id="imatge-carrusel" src="" style="height: 100%; margin: 0 auto; display: block;"/>
+</div>
+</form>
+<div id="llista-observacions"></div>
+
+<script>
+    let index = 1;
+    const total = 5;
+    let intervalId = null;
+    let carruselActiu = false;
+
+    function imatge() {
+        const nomMatricula = document.getElementById("matricula").textContent.trim();
+        const carrusel = document.getElementById("carrusel");
+        const img = document.getElementById("imatge-carrusel");
+
+        if (carruselActiu) {
+            clearInterval(intervalId);
+            intervalId = null;
+            carrusel.style.display = "none";
+            index = 1;
+            carruselActiu = false;
+            return;
+        }
+
+        carrusel.style.display = "block";
+        img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
+        carruselActiu = true;
+
+        intervalId = setInterval(() => {
+            index++;
+            if (index > total) {
+                clearInterval(intervalId);
+                intervalId = null;
+                carrusel.style.display = "none";
+                index = 1;
+                carruselActiu = false;
+                return;
+            }
+            img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
+        }, 3000);
+    }
+
+    function afegirObservacio(e) {
+        e.preventDefault();
+        const text = document.getElementById("observacions").value;
+        if (text.trim() === "") return;
+        const div = document.createElement("div");
+        div.textContent = text;
+        document.getElementById("llista-observacions").appendChild(div);
+        document.getElementById("observacions").value = "";
+    }
+</script>
+</main>
+
+</body>
+</html>
