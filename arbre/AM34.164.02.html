@@ -10,7 +10,7 @@
 <header><h1>Cirerer del Soler de Mansolí</h1></header>
 <main>
 <ul>
-<li><strong>Matrícula:</strong> <span id="matricula">AM34.164.02</span></li>
+<li><strong>Matrícula:</strong> AM34.164.02</li>
 <li><strong>Tàxon:</strong> Prunus avium v. silvestris</li>
 <li><strong>Tipologia:</strong> Caducifoli </li>
 <li><strong>Terme municipal:</strong> Sant Hilari Sacalm</li>
@@ -22,7 +22,10 @@
 <td>Mort el 2013. El Soler de Mansolí és una de les masies més destacades del municipi. És un gran casal amb solanes o galeries de cara a migdia, arrecerat en un replec del massís de Solterra, renovat al segle XVIII (1728, 1754 i 1771).
 Malgrat el trasbals de les guerres carlines, durant les quals fou convertit en hospital de campanya, i de la Guerra Civil, guarda vells teginats i mobles i és un bell exponent de la potència de la pagesia guillerienca del XVIII.</td>
 <td></td><h2>Informació etnoecològica afegida pels usuaris</h2>
-
+<form onsubmit="afegirObservacio(event)">
+<textarea id="observacions" placeholder="Escriu aquí la teva informació..." rows="5"></textarea><br/>
+<button type="submit">Afegir informació</button>
+</form>
 <div id="llista-observacions"></div>
 <h2>Bibliografia</h2>
 <td>Generalitat de Catalunya (2022). <em>Cirerer del Soler de Mansolí</em>. Recuperat de <u>https://mediambient.gencat.cat/ca/05_ambits_dactuacio/patrimoni_natural/arbres-monumentals/am_arbres_monumentals_fitxes/selva-17/cirerer-del-soler-de-mansoli-mi/index.html</u></td>
@@ -30,68 +33,17 @@ Malgrat el trasbals de les guerres carlines, durant les quals fou convertit en h
 <a href="../comarques/girona/la-selva.html">Torna a la comarca</a>
 <a href="../index.html">Torna a l'inici</a>
 </div>
-
-<form onsubmit="afegirObservacio(event)">
-<textarea id="observacions" placeholder="Escriu aquí la teva observació..." rows="5"></textarea><br/>
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<button type="submit">Afegir observació</button>
-<button onclick="imatge()" type="button">Imatges</button>
-</div>
-<div id="carrusel" style="display: none; width: 100%; height: 500px; overflow: hidden; margin-top: 10px; position: relative;">
-<img id="imatge-carrusel" src="" style="height: 100%; margin: 0 auto; display: block;"/>
-</div>
-</form>
-<div id="llista-observacions"></div>
-
-<script>
-    let index = 1;
-    const total = 5;
-    let intervalId = null;
-    let carruselActiu = false;
-
-    function imatge() {
-        const nomMatricula = document.getElementById("matricula").textContent.trim();
-        const carrusel = document.getElementById("carrusel");
-        const img = document.getElementById("imatge-carrusel");
-
-        if (carruselActiu) {
-            clearInterval(intervalId);
-            intervalId = null;
-            carrusel.style.display = "none";
-            index = 1;
-            carruselActiu = false;
-            return;
-        }
-
-        carrusel.style.display = "block";
-        img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
-        carruselActiu = true;
-
-        intervalId = setInterval(() => {
-            index++;
-            if (index > total) {
-                clearInterval(intervalId);
-                intervalId = null;
-                carrusel.style.display = "none";
-                index = 1;
-                carruselActiu = false;
-                return;
-            }
-            img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
-        }, 3000);
-    }
-
-    function afegirObservacio(e) {
-        e.preventDefault();
-        const text = document.getElementById("observacions").value;
-        if (text.trim() === "") return;
-        const div = document.createElement("div");
-        div.textContent = text;
-        document.getElementById("llista-observacions").appendChild(div);
-        document.getElementById("observacions").value = "";
-    }
-</script>
 </main>
-
+<script>
+        function afegirObservacio(e) {
+            e.preventDefault();
+            const text = document.getElementById("observacions").value;
+            if (text.trim() === "") return;
+            const div = document.createElement("div");
+            div.textContent = text;
+            document.getElementById("llista-observacions").appendChild(div);
+            document.getElementById("observacions").value = "";
+        }
+    </script>
 </body>
 </html>

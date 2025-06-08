@@ -10,7 +10,7 @@
 <header><h1>Mata de la Mata</h1></header>
 <main>
 <ul>
-<li><strong>Matrícula:</strong> <span id="matricula">AM17.231.02</span></li>
+<li><strong>Matrícula:</strong> AM17.231.02</li>
 <li><strong>Tàxon:</strong> Pistacia lentiscus</li>
 <li><strong>Tipologia:</strong> Perennifoli</li>
 <li><strong>Terme municipal:</strong> Sant Pere de Ribes  </li>
@@ -23,78 +23,30 @@
 Explica la llegenda que fa molts anys (segle XIX), a l'indret on actualment hi ha la masia de la Mata, hi residia una bruixa. Vivia en una petita cova excavada sota el llentiscle o mata, magnífic exemplar que encara podem contemplar en l'actualitat. La seva fama residia en els sortilegis i filtres que preparava, especialment els destinats a l'amor o el desamor. Arreu de la contrada tothom coneixia la bruixa i els seus elixirs fins que, sobtadament, va desaparèixer.</td>
 <td></td>
 <h2>Informació etnoecològica afegida pels usuaris</h2>
-
+<form onsubmit="afegirObservacio(event)">
+<textarea id="observacions" placeholder="Escriu aquí la teva informació..." rows="5"></textarea><br/>
+<button type="submit">Afegir informació</button>
+</form>
 <div id="llista-observacions"></div>
 <h2>Bibliografia</h2>
-<td>Diputació de Barcelona (2010). <em>Llegenda de la bruixa de la Mata.</em> Recuperat de  <u>https://patrimonicultural.diba.cat/element/llegenda-de-la-bruixa-de-la-mata<br/></u> 
-Generalitat de Catalunya (2021). <em>Mata de la Mata</em>. Recuperat de <u>https://mediambient.gencat.cat/ca/05_ambits_dactuacio/patrimoni_natural/arbres-monumentals/am_arbres_monumentals_fitxes/garraf-3/mata-de-la-mata/index.html<br/></u>
+<td>Diputació de Barcelona (2010). <em>Llegenda de la bruixa de la Mata.</em> Recuperat de  <u>https://patrimonicultural.diba.cat/element/llegenda-de-la-bruixa-de-la-mata<Br></u> 
+Generalitat de Catalunya (2021). <em>Mata de la Mata</em>. Recuperat de <u>https://mediambient.gencat.cat/ca/05_ambits_dactuacio/patrimoni_natural/arbres-monumentals/am_arbres_monumentals_fitxes/garraf-3/mata-de-la-mata/index.html<Br></u>
 Plantipodes-AM (2023). <em>Mata de la Mata</em>. Recuperat de <u>https://www.plantipodes-am.cat/fitxes/matamata.html</u></td>
 <div class="center">
 <a href="../comarques/barcelona/garraf.html">Torna a la comarca</a>
 <a href="../index.html">Torna a l'inici</a>
 </div>
-
-<form onsubmit="afegirObservacio(event)">
-<textarea id="observacions" placeholder="Escriu aquí la teva observació..." rows="5"></textarea><br/>
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<button type="submit">Afegir observació</button>
-<button onclick="imatge()" type="button">Imatges</button>
-</div>
-<div id="carrusel" style="display: none; width: 100%; height: 500px; overflow: hidden; margin-top: 10px; position: relative;">
-<img id="imatge-carrusel" src="" style="height: 100%; margin: 0 auto; display: block;"/>
-</div>
-</form>
-<div id="llista-observacions"></div>
-
-<script>
-    let index = 1;
-    const total = 5;
-    let intervalId = null;
-    let carruselActiu = false;
-
-    function imatge() {
-        const nomMatricula = document.getElementById("matricula").textContent.trim();
-        const carrusel = document.getElementById("carrusel");
-        const img = document.getElementById("imatge-carrusel");
-
-        if (carruselActiu) {
-            clearInterval(intervalId);
-            intervalId = null;
-            carrusel.style.display = "none";
-            index = 1;
-            carruselActiu = false;
-            return;
-        }
-
-        carrusel.style.display = "block";
-        img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
-        carruselActiu = true;
-
-        intervalId = setInterval(() => {
-            index++;
-            if (index > total) {
-                clearInterval(intervalId);
-                intervalId = null;
-                carrusel.style.display = "none";
-                index = 1;
-                carruselActiu = false;
-                return;
-            }
-            img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
-        }, 3000);
-    }
-
-    function afegirObservacio(e) {
-        e.preventDefault();
-        const text = document.getElementById("observacions").value;
-        if (text.trim() === "") return;
-        const div = document.createElement("div");
-        div.textContent = text;
-        document.getElementById("llista-observacions").appendChild(div);
-        document.getElementById("observacions").value = "";
-    }
-</script>
 </main>
-
+<script>
+        function afegirObservacio(e) {
+            e.preventDefault();
+            const text = document.getElementById("observacions").value;
+            if (text.trim() === "") return;
+            const div = document.createElement("div");
+            div.textContent = text;
+            document.getElementById("llista-observacions").appendChild(div);
+            document.getElementById("observacions").value = "";
+        }
+    </script>
 </body>
 </html>

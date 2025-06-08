@@ -10,7 +10,7 @@
 <header><h1>Roures d'Ormoier</h1></header>
 <main>
 <ul>
-<li><strong>Matrícula:</strong> <span id="matricula">AM19.109.01</span></li>
+<li><strong>Matrícula:</strong> AM19.109.01</li>
 <li><strong>Tàxon:</strong> Quercus robur</li>
 <li><strong>Tipologia:</strong> Caducifoli </li>
 <li><strong>Terme municipal:</strong> Montagut</li>
@@ -22,78 +22,30 @@
 <td>L’expansió de la població cap a zones de muntanya al segle XVIII, amb el consegüent augment del consum de fusta en tots els àmbits: artesà, domèstic, industrial i naval, va fer necessària la promulgació d’una reial ordre, per primera vegada, que regulés l’explotació, la conservació i la repoblació dels boscos. L’ordre del 31 de gener de 1748 disposava que els intendents de Marina fossin els encarregats de marcar els arbres idonis per a la construcció de vaixells en totes les muntanyes situades a menys de 25 leguas (uns 138 km) de les nostres costes i dels rius navegables. Segons aquesta ordre, els propietaris de boscos no podien tallar aquells arbres que la Marina marcava. Per a tallar qualsevol altre arbre calia demanar autorització. Els roures d’Hortmoier, coneguts també com els roures del Rei, van ser marcats per la Marina entre els anys 1748 i 1751, i no havent estat utilitzats per a la construcció naval, van quedar protegits en aquest remot indret de la Garrotxa. Posteriors disposicions, ja al segle XX, sobre els arbres que, per la seva grandària o singularitat, han estat qualificats de monumentals, han fet arribar fins als nostres dies aquests exemplars tan admirats</td>
 <td></td>
 <h2>Informació etnoecològica afegida pels usuaris</h2>
-
+<form onsubmit="afegirObservacio(event)">
+<textarea id="observacions" placeholder="Escriu aquí la teva informació..." rows="5"></textarea><br/>
+<button type="submit">Afegir informació</button>
+</form>
 <div id="llista-observacions"></div>
 <h2>Bibliografia</h2>
-<td>Boada, M. &amp; Boada A., (2011). Roures d'Hortmoier I, II i IV. Dins <em>Arbres remarcables de Catalunya. 100 ombres colossals</em>. (pp. 128-129) Figueres.: Brau.
-<br/>Duran, G., Ros, A. &amp; Oliver, X. (eds.), (2018). Roures del Rei, roures de la vall d'Hortmoier. <em>Dintre de Arbres amb història de la Garrotxa. Guia dels arbres singulars de la comarca</em>. (pp. 82-83) Catalunya: Parc Natural de la Zona Volcànica de la Garrotxa.
-<br/>Generalitat de Catalunya (2021).<em> Roures d’Ormoier I, II, III.</em> Recuperat de <u>https://mediambient.gencat.cat/ca/05_ambits_dactuacio/patrimoni_natural/arbres-monumentals/am_arbres_monumentals_fitxes/garrotxa-7/roures-dormoier-i-ii-iii-n-al/index.html</u></td>
+<td>Boada, M. & Boada A., (2011). Roures d'Hortmoier I, II i IV. Dins <em>Arbres remarcables de Catalunya. 100 ombres colossals</em>. (pp. 128-129) Figueres.: Brau.
+<Br>Duran, G., Ros, A. & Oliver, X. (eds.), (2018). Roures del Rei, roures de la vall d'Hortmoier. <em>Dintre de Arbres amb història de la Garrotxa. Guia dels arbres singulars de la comarca</em>. (pp. 82-83) Catalunya: Parc Natural de la Zona Volcànica de la Garrotxa.
+<Br>Generalitat de Catalunya (2021).<em> Roures d’Ormoier I, II, III.</em> Recuperat de <u>https://mediambient.gencat.cat/ca/05_ambits_dactuacio/patrimoni_natural/arbres-monumentals/am_arbres_monumentals_fitxes/garrotxa-7/roures-dormoier-i-ii-iii-n-al/index.html</u></td>
 <td></td><div class="center">
 <a href="../comarques/girona/la-garrotxa.html">Torna a la comarca</a>
 <a href="../index.html">Torna a l'inici</a>
 </div>
-
-<form onsubmit="afegirObservacio(event)">
-<textarea id="observacions" placeholder="Escriu aquí la teva observació..." rows="5"></textarea><br/>
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<button type="submit">Afegir observació</button>
-<button onclick="imatge()" type="button">Imatges</button>
-</div>
-<div id="carrusel" style="display: none; width: 100%; height: 500px; overflow: hidden; margin-top: 10px; position: relative;">
-<img id="imatge-carrusel" src="" style="height: 100%; margin: 0 auto; display: block;"/>
-</div>
-</form>
-<div id="llista-observacions"></div>
-
-<script>
-    let index = 1;
-    const total = 5;
-    let intervalId = null;
-    let carruselActiu = false;
-
-    function imatge() {
-        const nomMatricula = document.getElementById("matricula").textContent.trim();
-        const carrusel = document.getElementById("carrusel");
-        const img = document.getElementById("imatge-carrusel");
-
-        if (carruselActiu) {
-            clearInterval(intervalId);
-            intervalId = null;
-            carrusel.style.display = "none";
-            index = 1;
-            carruselActiu = false;
-            return;
-        }
-
-        carrusel.style.display = "block";
-        img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
-        carruselActiu = true;
-
-        intervalId = setInterval(() => {
-            index++;
-            if (index > total) {
-                clearInterval(intervalId);
-                intervalId = null;
-                carrusel.style.display = "none";
-                index = 1;
-                carruselActiu = false;
-                return;
-            }
-            img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
-        }, 3000);
-    }
-
-    function afegirObservacio(e) {
-        e.preventDefault();
-        const text = document.getElementById("observacions").value;
-        if (text.trim() === "") return;
-        const div = document.createElement("div");
-        div.textContent = text;
-        document.getElementById("llista-observacions").appendChild(div);
-        document.getElementById("observacions").value = "";
-    }
-</script>
 </main>
-
+<script>
+        function afegirObservacio(e) {
+            e.preventDefault();
+            const text = document.getElementById("observacions").value;
+            if (text.trim() === "") return;
+            const div = document.createElement("div");
+            div.textContent = text;
+            document.getElementById("llista-observacions").appendChild(div);
+            document.getElementById("observacions").value = "";
+        }
+    </script>
 </body>
 </html>

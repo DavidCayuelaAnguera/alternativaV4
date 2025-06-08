@@ -10,7 +10,7 @@
 <header><h1>Castanyers de la Traüna III</h1></header>
 <main>
 <ul>
-<li><strong>Matrícula:</strong> <span id="matricula">AM41.081.04</span></li><li><strong>Tàxon:</strong> Castanea sativa</li>
+<li><strong>Matrícula:</strong> AM41.081.04</li><li><strong>Tàxon:</strong> Castanea sativa</li>
 <li><strong>Tipologia:</strong> Caducifoli</li>
 <li><strong>Terme municipal:</strong> Fogars de Montclús</li>
 <li><strong>Comarca:</strong> Vallès Oriental</li>
@@ -19,76 +19,28 @@
 </ul>
 <h2>Informació Etnoecològica</h2><td>Aquests quatre grans castanyers custodiaven (en el moment de la seva màxima esplendor) el camí de la casa de colònies de la Traüna</td>
 <td></td><h2>Informació etnoecològica afegida pels usuaris</h2>
-
+<form onsubmit="afegirObservacio(event)">
+<textarea id="observacions" placeholder="Escriu aquí la teva informació..." rows="5"></textarea><br/>
+<button type="submit">Afegir informació</button>
+</form>
 <div id="llista-observacions"></div>
-<h2>Bibliografia</h2><td>Broncano, M.J., Boada, M., &amp; Boada A., (2006). <em>Arbres i Arbredes singulars del Montseny.</em> (p. 84) Sant Vicenç de Castellet: Farell<br/>
-Generalitat de Catalunya (2022). <em>Castanyers de la Traüna</em>. Recuperat de <u>https://mediambient.gencat.cat/ca/05_ambits_dactuacio/patrimoni_natural/arbres-monumentals/am_arbres_monumentals_fitxes/valles-oriental-10/castanyers-de-la-trauena-n/<br/></u></td>
+<h2>Bibliografia</h2><td>Broncano, M.J., Boada, M., & Boada A., (2006). <em>Arbres i Arbredes singulars del Montseny.</em> (p. 84) Sant Vicenç de Castellet: Farell<Br>
+Generalitat de Catalunya (2022). <em>Castanyers de la Traüna</em>. Recuperat de <u>https://mediambient.gencat.cat/ca/05_ambits_dactuacio/patrimoni_natural/arbres-monumentals/am_arbres_monumentals_fitxes/valles-oriental-10/castanyers-de-la-trauena-n/<Br></u></td>
 <td></td><div class="center"><div class="center">
 <a href="../comarques/barcelona/valles-oriental.html">Torna a la comarca</a>
 <a href="../index.html">Torna a l'inici</a>
 </div>
-</div>
-<form onsubmit="afegirObservacio(event)">
-<textarea id="observacions" placeholder="Escriu aquí la teva observació..." rows="5"></textarea><br/>
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<button type="submit">Afegir observació</button>
-<button onclick="imatge()" type="button">Imatges</button>
-</div>
-<div id="carrusel" style="display: none; width: 100%; height: 500px; overflow: hidden; margin-top: 10px; position: relative;">
-<img id="imatge-carrusel" src="" style="height: 100%; margin: 0 auto; display: block;"/>
-</div>
-</form>
-<div id="llista-observacions"></div>
-
-<script>
-    let index = 1;
-    const total = 5;
-    let intervalId = null;
-    let carruselActiu = false;
-
-    function imatge() {
-        const nomMatricula = document.getElementById("matricula").textContent.trim();
-        const carrusel = document.getElementById("carrusel");
-        const img = document.getElementById("imatge-carrusel");
-
-        if (carruselActiu) {
-            clearInterval(intervalId);
-            intervalId = null;
-            carrusel.style.display = "none";
-            index = 1;
-            carruselActiu = false;
-            return;
-        }
-
-        carrusel.style.display = "block";
-        img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
-        carruselActiu = true;
-
-        intervalId = setInterval(() => {
-            index++;
-            if (index > total) {
-                clearInterval(intervalId);
-                intervalId = null;
-                carrusel.style.display = "none";
-                index = 1;
-                carruselActiu = false;
-                return;
-            }
-            img.src = `/imatges/${nomMatricula}/${index}.jpeg`;
-        }, 3000);
-    }
-
-    function afegirObservacio(e) {
-        e.preventDefault();
-        const text = document.getElementById("observacions").value;
-        if (text.trim() === "") return;
-        const div = document.createElement("div");
-        div.textContent = text;
-        document.getElementById("llista-observacions").appendChild(div);
-        document.getElementById("observacions").value = "";
-    }
-</script>
 </main>
-
+<script>
+        function afegirObservacio(e) {
+            e.preventDefault();
+            const text = document.getElementById("observacions").value;
+            if (text.trim() === "") return;
+            const div = document.createElement("div");
+            div.textContent = text;
+            document.getElementById("llista-observacions").appendChild(div);
+            document.getElementById("observacions").value = "";
+        }
+    </script>
 </body>
 </html>

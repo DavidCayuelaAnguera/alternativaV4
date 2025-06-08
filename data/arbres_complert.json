@@ -281,7 +281,7 @@
       },
       {
         "id": 63,
-        "nom": "Pi d'en Xandri ??????",
+        "nom": "Pi d'en Xandri",
         "matricula": "SenseMatricula3",
         "taxon": "Pinus pinea",
         "tipologia": "",
@@ -296,7 +296,7 @@
       },
       {
         "id": 64,
-        "nom": "Roure Gros del Golf ?????????",
+        "nom": "Roure Gros del Golf ",
         "matricula": "SenseMatricula4",
         "taxon": "Quercus pubescens",
         "tipologia": "",
@@ -311,7 +311,7 @@
       },
       {
         "id": 65,
-        "nom": "Plàtan del Castell de Mogoda ???????",
+        "nom": "Plàtan del Castell de Mogoda",
         "matricula": "SenseMatricula5",
         "taxon": "Platanus × hispanica",
         "tipologia": "",
@@ -1192,7 +1192,7 @@
       {
         "id": 6,
         "nom": "Salze de can Mensa",
-        "matricula": "AMprevist,ALprev.06.170.01",
+        "matricula": "AM 06.170.01",
         "taxon": "Salix alba",
         "tipologia": "",
         "terme_municipal": "Prats de Rei",
